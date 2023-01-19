@@ -1,0 +1,18 @@
+version: "3"
+services:
+  consul:
+    image: consul:1.14.3
+    restart: always
+    ports:
+      - "53:53"
+      - "8500:8500"
+      - "8300:8300"
+      - "8301:8301"
+      - "8302:8302"
+      - "8600:8600"
+    command: agent -server -bind=0.0.0.0 -client=0.0.0.0 -node=consul -bootstrap-expect=1 -ui
+    
+networks:
+  default:
+    external:
+      name: lqy-network
