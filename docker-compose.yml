@@ -11,10 +11,9 @@ services:
       - "8302:8302"
       - "8600:8600"
     volumes:
-    - ./data:/consul/data
+    - ./data:/consul/data:rw
     command: agent -server -bind=0.0.0.0 -client=0.0.0.0 -node=consul -bootstrap-expect=1 -ui
     
 networks:
-  default:
-    external:
-      name: lqy-network
+  consul:
+    driver: bridge
