@@ -12,7 +12,6 @@ services:
       - "8600:8600"
     volumes:
     - ./data:/consul/data
-    - ./conf:/consul/conf
     command: agent -server -bind=0.0.0.0 -client=0.0.0.0 -node=consul -bootstrap-expect=1 -ui
     
 networks:
