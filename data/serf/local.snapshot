@@ -1,4 +1,0 @@
-alive: consul 172.21.0.2:8301
-event-clock: 1
-alive: consul 172.22.0.2:8301
-event-clock: 2
