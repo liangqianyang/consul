@@ -1,7 +1,7 @@
 version: "3"
 services:
   consul-server1:
-    image: consul
+    image: consul:latest
     container_name: consul-server1
     command: consul agent -server -bootstrap-expect=3 -bind=0.0.0.0 -client=0.0.0.0 -ui
     networks:
@@ -12,7 +12,7 @@ services:
     volumes:
       - ./data:/consul/data
   consul-server2:
-    image: consul
+    image: consul:latest
     container_name: consul-server2
     command: consul agent -server -join=consul-server1 -bind=0.0.0.0 -client=0.0.0.0
     networks:
@@ -20,7 +20,7 @@ services:
     volumes:
       - ./data:/consul/data
   consul-server3:
-    image: consul
+    image: consul:latest
     container_name: consul-server3
     command: consul agent -server -join=consul-server1 -bind=0.0.0.0 -client=0.0.0.0
     networks:
