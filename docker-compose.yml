@@ -4,6 +4,8 @@ services:
     image: consul
     container_name: consul-server1
     command: consul agent -server -bootstrap-expect=3 -bind=0.0.0.0 -client=0.0.0.0 -ui
+    networks:
+      - consul
     ports:
       - 8500:8500
       - 8600:8600/udp
@@ -13,12 +15,16 @@ services:
     image: consul
     container_name: consul-server2
     command: consul agent -server -join=consul-server1 -bind=0.0.0.0 -client=0.0.0.0
+    networks:
+      - consul
     volumes:
       - ./data:/consul/data
   consul-server3:
     image: consul
     container_name: consul-server3
     command: consul agent -server -join=consul-server1 -bind=0.0.0.0 -client=0.0.0.0
+    networks:
+      - consul
     volumes:
       - ./data:/consul/data
 networks:
