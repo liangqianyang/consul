@@ -1,26 +1,26 @@
 version: "3"
 services:
-  consul1:
-    image: consul:1.14.3
-    container_name: consul1
-    restart: always
-    volumes:
-    - ./data:/consul/data:rw
-    command: agent -server -bind=0.0.0.0 -client=0.0.0.0 -bootstrap-expect=2 -node=consul1
-  consul2:
-    image: consul:1.14.3
-    container_name: consul2
-    restart: always
-    volumes:
-    - ./data:/consul/data:rw
-    command: agent -server -bind=0.0.0.0 -client=0.0.0.0 -retry-join=consul1 -node=consul2
-  consul-client:
-    image: consul:1.14.3
-    container_name: lqy-consu3
-    restart: always
+  consul-server1:
+    image: consul
+    container_name: consul-server1
+    command: consul agent -server -bootstrap-expect=3 -bind=0.0.0.0 -client=0.0.0.0 -ui
     ports:
       - 8500:8500
-    command: agent -bind=0.0.0.0 -client=0.0.0.0 -retry-join=consul1 -ui -node=client1
+      - 8600:8600/udp
+    volumes:
+      - ./data:/consul/data
+  consul-server2:
+    image: consul
+    container_name: consul-server2
+    command: consul agent -server -join=consul-server1 -bind=0.0.0.0 -client=0.0.0.0
+    volumes:
+      - ./data:/consul/data
+  consul-server3:
+    image: consul
+    container_name: consul-server3
+    command: consul agent -server -join=consul-server1 -bind=0.0.0.0 -client=0.0.0.0
+    volumes:
+      - ./data:/consul/data
 networks:
   consul:
     driver: bridge
