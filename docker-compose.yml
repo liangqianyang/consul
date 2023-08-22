@@ -1,32 +1,29 @@
-version: "3"
+version: '3'
 services:
-  consul-server1:
+  consul-server-1:
     image: consul:1.14.3
-    container_name: consul-server1
-    command: consul agent -server -bootstrap-expect=3 -bind=0.0.0.0 -client=0.0.0.0 -ui
-    networks:
-      - consul
+    restart: always
     ports:
-      - 8500:8500
-      - 8600:8600/udp
-    volumes:
-      - ./data:/consul/data:rw
-  consul-server2:
+      - "8500:8500"
+    command: agent -server -bootstrap-expect=3 -ui -client=0.0.0.0
+
+  consul-server-2:
     image: consul:1.14.3
-    container_name: consul-server2
-    command: consul agent -server -join=consul-server1 -bind=0.0.0.0 -client=0.0.0.0
-    networks:
-      - consul
-    volumes:
-      - ./data:/consul/data:rw
-  consul-server3:
+    restart: always
+    ports:
+      - "8501:8500"
+    command: agent -server -join=consul-server-1 -ui -client=0.0.0.0
+
+  consul-server-3:
     image: consul:1.14.3
-    container_name: consul-server3
-    command: consul agent -server -join=consul-server1 -bind=0.0.0.0 -client=0.0.0.0
-    networks:
-      - consul
-    volumes:
-      - ./data:/consul/data:rw
-networks:
-  consul:
-    driver: bridge
+    restart: always
+    ports:
+      - "8502:8500"
+    command: agent -server -join=consul-server-1 -ui -client=0.0.0.0
+
+  consul-client:
+    image: consul:1.14.3
+    restart: always
+    ports:
+      - "8600:8600/udp"
+    command: agent -join=consul-server-1 -ui -client=0.0.0.0
