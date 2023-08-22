@@ -15,7 +15,7 @@ services:
     - ./data:/consul/data:rw
     command: agent -server -client=0.0.0.0 -retry-join=consul1 -node=consul2
   consul-client:
-    image: consul:latest
+    image: consul:1.14.3
     container_name: lqy-consu3
     restart: always
     ports:
