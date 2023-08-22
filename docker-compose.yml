@@ -6,7 +6,7 @@ services:
     ports:
       - "8500:8500"
     volumes:
-      - ./data:/consul/data
+      - ./data:/consul/data:rw
     command: agent -server -bootstrap-expect=3 -ui -client=0.0.0.0
 
   consul-server-2:
@@ -15,7 +15,7 @@ services:
     ports:
       - "8501:8500"
     volumes:
-      - ./data:/consul/data
+      - ./data:/consul/data:rw
     command: agent -server -join=consul-server-1 -ui -client=0.0.0.0
 
   consul-server-3:
@@ -24,7 +24,7 @@ services:
     ports:
       - "8502:8500"
     volumes:
-      - ./data:/consul/data
+      - ./data:/consul/data:rw
     command: agent -server -join=consul-server-1 -ui -client=0.0.0.0
 
   consul-client:
@@ -33,7 +33,7 @@ services:
     ports:
       - "8600:8600/udp"
     volumes:
-      - ./data:/consul/data
+      - ./data:/consul/data:rw
     command: agent -join=consul-server-1 -ui -client=0.0.0.0
 networks:
   consul:
