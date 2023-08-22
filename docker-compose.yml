@@ -8,33 +8,35 @@ services:
     volumes:
       - ./data:/consul/data:rw
     command: agent -server -bootstrap-expect=3 -ui -client=0.0.0.0
+    networks:
+      - consul
 
   consul-server-2:
     image: consul:1.14.3
     restart: always
     ports:
       - "8501:8500"
-    volumes:
-      - ./data:/consul/data:rw
     command: agent -server -join=consul-server-1 -ui -client=0.0.0.0
+    networks:
+      - consul
 
   consul-server-3:
     image: consul:1.14.3
     restart: always
     ports:
       - "8502:8500"
-    volumes:
-      - ./data:/consul/data:rw
     command: agent -server -join=consul-server-1 -ui -client=0.0.0.0
+    networks:
+      - consul
 
   consul-client:
     image: consul:1.14.3
     restart: always
     ports:
       - "8600:8600/udp"
-    volumes:
-      - ./data:/consul/data:rw
     command: agent -join=consul-server-1 -ui -client=0.0.0.0
+    networks:
+      - consul
 networks:
   consul:
     driver: bridge
