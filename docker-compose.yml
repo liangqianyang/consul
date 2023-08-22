@@ -7,15 +7,13 @@ services:
     volumes:
     - ./data:/consul/data:rw
     command: agent -server -client=0.0.0.0 -bootstrap-expect=2 -node=consul1
-  
   consul-server2:
     image: consul:1.14.3
     container_name: lqy-consu2
     restart: always
     volumes:
     - ./data:/consul/data:rw
-    command: agent -server -client=0.0.0.0 -retry-join=consul1 -node=consul1
-
+    command: agent -server -client=0.0.0.0 -retry-join=consul1 -node=consul2
   consul-client:
     image: consul:latest
     container_name: lqy-consu3
