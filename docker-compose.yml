@@ -5,9 +5,6 @@ services:
     restart: always
     ports:
       - "8500:8500"
-      - "8300:8300"
-      - "8301:8301"
-      - "8302:8302"
     volumes:
       - ./data:/consul/data
     command: agent -server -bootstrap-expect=3 -ui -client=0.0.0.0
@@ -17,9 +14,6 @@ services:
     restart: always
     ports:
       - "8501:8500"
-      - "8310:8300"
-      - "8311:8301"
-      - "8312:8302"
     volumes:
       - ./data:/consul/data
     command: agent -server -join=consul-server-1 -ui -client=0.0.0.0
@@ -29,9 +23,6 @@ services:
     restart: always
     ports:
       - "8502:8500"
-      - "8320:8300"
-      - "8321:8301"
-      - "8322:8302"
     volumes:
       - ./data:/consul/data
     command: agent -server -join=consul-server-1 -ui -client=0.0.0.0
